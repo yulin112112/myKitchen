@@ -1,0 +1,26 @@
+name: Deploy Multiple Sites
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy Project1
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: ./docs/project1
+          destination_dir: project1  # 部署到gh-pages分支的project1目录
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy Project2
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: ./docs/project2
+          destination_dir: project2
+          github_token: ${{ secrets.GITHUB_TOKEN }}
